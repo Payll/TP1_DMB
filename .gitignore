@@ -161,3 +161,6 @@ cython_debug/
 
 *.zip
 *.csv
+
+.idea/
+.DS_Store

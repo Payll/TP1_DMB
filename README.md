@@ -11,7 +11,7 @@ La librairie est très bien documentée et permet de faire des requetes complexe
 Le code se situe à la racine du repo github séparé en partie dans différents fichiers només PartX. 
 
 
-## Comparaison des score des premiers joueurs 
+## Comparaison des score des premiers joueurs (100000 premier samples du dataset)
 
 Voila le tableau des premiers joueurs basés sur leur position dans les parties joués.
 
@@ -54,5 +54,25 @@ Et voici la table des dix premiers joueurs basé sur leur nombre de kill
 On peut retrouver certains joueurs dans les deux classements. 
 Ainsi, on peut spontanement répondre que faire des kills semblerait assurer un classement plus haut 
 
+## Comparaison entre les données persitantes et non persistantes
 
+Dans cette partie nous avons comparé les temps d'execution entre les données persistantes et non persistantes.
 
+```
+Temps avec persistance: 0.030727386474609375
+Temps sans persistance: 0.02064805030822754
+```
+
+On ne peux pas voir de grande différence entre les deux temps d'execution.
+Pour cela nous avons créer un docker avec un seul coeur et 500Mo de ram.
+
+Pour executer le docker il faut lancer la commande suivante:
+
+```bash
+sh docker.sh
+```
+
+Nous avons donc en sortie:
+```
+TODO : mettre le temps d'execution
+```
