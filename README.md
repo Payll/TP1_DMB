@@ -64,7 +64,8 @@ Temps sans persistance: 0.02064805030822754
 ```
 
 On ne peux pas voir de grande différence entre les deux temps d'execution.
-Pour cela nous avons créer un docker avec un seul coeur et 500Mo de ram.
+Pour cela nous avons créer un docker avec un seul coeur et 256Mo de ram.
+Et nous utilisons le dataset de tout les joueurs.
 
 Pour executer le docker il faut lancer la commande suivante:
 
@@ -74,5 +75,9 @@ sh docker.sh
 
 Nous avons donc en sortie:
 ```
-TODO : mettre le temps d'execution
+Temps avec persistance: 0.023796922365824383                                    
+Temps sans persistance: 0.011468036969502767
 ```
+
+On peut voir que le temps d'execution est plus long avec la persistance.
+Cela est du au fait que le dataset est plus gros et que le temps de persistance est plus long.

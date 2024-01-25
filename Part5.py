@@ -3,23 +3,22 @@ from pyspark.sql.functions import col, count, udf
 from pyspark.storagelevel import StorageLevel
 from pyspark.sql.types import IntegerType
 import time
-import resource
 
 def mesure_performance(df, with_persistence):
     if with_persistence:
-        df.persist(StorageLevel.MEMORY_AND_DISK)
+        df.persist(StorageLevel.DISK_ONLY_3)
 
     score_udf = udf(calculate_score, IntegerType())
 
     times = []
-    for _ in range(5):
+    for _ in range(150):
         start_time = time.time()
 
-        df = df.withColumn("score", score_udf(col("player_assists"), col("player_dmg"), col("player_kills"),
+        tmp = df.withColumn("score", score_udf(col("player_assists"), col("player_dmg"), col("player_kills"),
                                               col("team_placement")))
 
         # Trouver les 10 meilleurs joueurs
-        top_players = df.groupBy("player_name").sum("score").orderBy("sum(score)", ascending=False).limit(10)
+        top_players = tmp.groupBy("player_name").sum("score").orderBy("sum(score)", ascending=False).limit(10)
 
         end_time = time.time()
         times.append(end_time - start_time)
@@ -46,8 +45,7 @@ def calculate_score(assists, damage, kills, rank):
 spark = SparkSession.builder.appName("Analyse des Données de Jeu Avancée").getOrCreate()
 
 # Chargement des données
-df = spark.read.csv("sample_agg_match_stats_0.csv", header=True, inferSchema=True)
-
+df = spark.read.csv("agg_match_stats_0.csv", header=True, inferSchema=True)
 # Calculer le nombre de parties par joueur
 df_player_games = df.groupBy("player_name").agg(count("*").alias("number_of_games"))
 
